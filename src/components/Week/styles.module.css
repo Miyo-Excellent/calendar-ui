@@ -1,0 +1,47 @@
+.hour__header {
+    width: 100%;
+}
+
+.week__content, .hours__content {  
+    display: grid;
+    grid-template-columns: 0.4fr repeat(7, 1fr);
+}
+
+.week__day {
+    width: 100%;
+    padding: 10px;
+}
+
+.week__date {
+    font-weight: 700;
+    font-size: 30px;
+    color: #767676;
+}
+
+.week__day, .hour__header {
+    border: 1px solid #e5e5e5;
+}
+
+.week__day_name {
+    font-weight: 600;
+    color: #767676;
+}
+
+.week__today_text {
+    color: #0ED6B5;
+}
+
+.hour__day {
+    position: relative;
+}
+
+.hour, .hour__day {
+    height: 120px;
+    border: 1px solid #ccc;
+}
+
+.hour__text {
+    color: #767676;
+    font-weight: bold;
+    font-size: 15px;
+}

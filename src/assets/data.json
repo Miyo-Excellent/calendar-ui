@@ -1,0 +1,67 @@
+[
+    {
+        "id": 1,
+        "technician_name": "Santiago Ruiz",
+        "technician_charge": "Técnico de electricidad",
+        "technician_picture": null,
+        "ticket": "2023080200012",
+        "percentage": 40,
+        "service_type": "Instalación de bombillo",
+        "service_status": "in_progress",
+        "service_date": "2023/08/02",
+        "service_time": "06:00",
+        "service_duration": 80
+    },
+    {
+        "id": 2,
+        "technician_name": "Oscar Bernal",
+        "technician_charge": "Técnico de electricidad",
+        "technician_picture": null,
+        "ticket": "2023080200012",
+        "percentage": 80,
+        "service_type": "Instalación de bombillo",
+        "service_status": "in_progress",
+        "service_date": "2023/08/01",
+        "service_time": "06:30",
+        "service_duration": 80
+    },
+    {
+        "id": 3,
+        "technician_name": "Santiago Ruiz",
+        "technician_charge": "Técnico de electricidad",
+        "technician_picture": null,
+        "ticket": "2023080200012",
+        "percentage": 0,
+        "service_type": "Instalación de bombillo",
+        "service_status": "assigned",
+        "service_date": "2023/08/02",
+        "service_time": "12:30",
+        "service_duration": 80
+    },
+    {
+        "id": 4,
+        "technician_name": "Oscar Bernal",
+        "technician_charge": "Técnico de electricidad",
+        "technician_picture": null,
+        "ticket": "2023080200012",
+        "percentage": 60,
+        "service_type": "Instalación de bombillo",
+        "service_status": "assigned",
+        "service_date": "2023/08/04",
+        "service_time": "14:30",
+        "service_duration": 0
+    },
+    {
+        "id": 5,
+        "technician_name": "Santiago Ruiz",
+        "technician_charge": "Técnico de electricidad",
+        "technician_picture": null,
+        "ticket": "2023080200012",
+        "percentage": 0,
+        "service_type": "Instalación de bombillo",
+        "service_status": "assigned",
+        "service_date": "2023/08/05",
+        "service_time": "15:30",
+        "service_duration": 80
+    }
+]
