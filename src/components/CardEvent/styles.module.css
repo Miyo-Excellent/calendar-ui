@@ -1,16 +1,43 @@
 .card__container {
-    width: 100%;
-    position: absolute;
+    position: relative;
     z-index: 1;
+    border-radius: 8px;
+    overflow: hidden;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    -ms-border-radius: 8px;
+    -o-border-radius: 8px;
+    transition: all .3s ease-in-out;
+    -webkit-transition: all .3s ease-in-out;
+    -moz-transition: all .3s ease-in-out;
+    -ms-transition: all .3s ease-in-out;
+    -o-transition: all .3s ease-in-out;
+}
+
+.card__container.card__small_size:hover {
+    width: 100% !important;
+    height: 120px !important;
+    transform: scale(1.1) !important;
+    z-index: 2 !important;
+    -webkit-transform: scale(1.1) !important;
+    -moz-transform: scale(1.1) !important;
+    -ms-transform: scale(1.1) !important;
+    -o-transform: scale(1.1) !important;
+}
+
+.card__container.card__small_size:hover .card__details {
+    transition-delay: .3s;
+    opacity: 1 !important;
 }
 
 .card__content {
     padding: 10px;
+    height: 100%;
 }
 
 .card__container img {
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
@@ -32,6 +59,13 @@
 
 .card__details {
     margin-top: 10px;
+    height: 100%;
+    pointer-events: none;
+    transition: all .2s ease-in;
+    -webkit-transition: all .2s ease-in;
+    -moz-transition: all .2s ease-in;
+    -ms-transition: all .2s ease-in;
+    -o-transition: all .2s ease-in;
 }
 
 .card__details li {
@@ -43,5 +77,4 @@
 .card__details li span {
     float: right;
     font-weight: 300;
-    text-align: justify;
 }

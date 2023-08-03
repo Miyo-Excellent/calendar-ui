@@ -13,6 +13,21 @@ type WeekProps = {
 };
 
 export const Week = ({ firstDateOfWeek, data }: WeekProps) => {
+  const getDataOfDay = (day: Date) => {
+    const nextHour = new Date(day);
+    nextHour.setHours(nextHour.getHours() + 1);
+
+    return data.filter((service) => {
+      const dateService = new Date(
+        `${service.service_date} ${service.service_time}`
+      );
+      return (
+        dateService.getTime() >= day.getTime() &&
+        dateService.getTime() < nextHour.getTime()
+      );
+    });
+  };
+
   const hours = useMemo(() => {
     return getHoursOfDay();
   }, []);
@@ -52,19 +67,22 @@ export const Week = ({ firstDateOfWeek, data }: WeekProps) => {
             </div>
             {daysWeek.map((day) => {
               const date = formatDate(day).concat(` ${hour}`);
-              const dataOfDay = data.filter(
-                (service) =>
-                  new Date(
-                    `${service.service_date} ${service.service_time}`
-                  ).getTime() === new Date(date).getTime()
-              );
+              const dataOfDay = getDataOfDay(new Date(date));
               return (
-                <div key={`${day} ${hour}`} className={styles.hour__day}>
+                <div
+                  key={`${day} ${hour}`}
+                  className={styles.hour__day}
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: `repeat(${dataOfDay.length}, 1fr)`,
+                  }}
+                >
                   {dataOfDay.map((service) => {
                     return (
                       <CardEvent
                         service={service}
                         key={service.id}
+                        width={100 / dataOfDay.length}                        
                       />
                     );
                   })}

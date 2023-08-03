@@ -8,7 +8,6 @@ function App() {
   return (
     <>
       <div>
-        <h1>Gantt</h1>
         <Week firstDateOfWeek={new Date("2023/07/31")} data={data as ServiceByTechnician[]} />
       </div>
     </>
