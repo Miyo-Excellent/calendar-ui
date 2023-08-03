@@ -5,33 +5,42 @@ import { useMemo, useState } from "react";
 
 type CardEventProps = {
   service: ServiceByTechnician;
-  width?: number
-  style?: React.CSSProperties
+  width?: number;
 };
 
 export const CardEvent = ({ service, width = 100 }: CardEventProps) => {
-  const [w, setW] = useState<number>(width)
+  const [over, setOver] = useState<boolean>(false)
 
   const height = (service.service_duration * 100) / 60;
   const color = useMemo(() => {
-    return getRandomColor()
+    return getRandomColor();
   }, []);
+
+  const styleOver = useMemo(() => {
+    let percentage = 0
+    if (width < 100)
+      percentage = 400
+    return {
+      minWidth: `${over ? percentage + width : width}%`,
+      zIndex: over ? 2 : 1,
+      transform: `scale(${over ? 1.1 : 1})`,
+      height: over ? '100%' : `${height}%`
+    }
+  }, [over, width, height])
 
   return (
     <div
       className={`${styles.card__container} ${
-        height < 100 || w < 100 ? styles.card__small_size : ""
+        height < 100 || width < 100 ? styles.card__small_size : ""
       }`}
       style={{
-        height: `${height}%`,
+        /* height: `${height}%`, */
         background: addOpacityToHSL(color),
         top: `${service.service_time.slice(3)}%`,
-        minWidth: `${w}%`,
-        zIndex: w > 100 ? 2 : 1,
-        transform: `scale(${w > 100 ? 1.1 : 1})`
+        ...styleOver
       }}
-      onMouseOver={() => width < 100 ? setW(350 + width) : null}
-      onMouseOut={() => setW(width)}
+      onMouseOver={() => (width < 100 || height < 100 ? setOver(true) : null)}
+      onMouseOut={() => setOver(false)}
     >
       {/* PERCENTAGE DIV */}
       <div
@@ -50,13 +59,19 @@ export const CardEvent = ({ service, width = 100 }: CardEventProps) => {
             src="https://www.vhv.rs/dpng/d/276-2761771_transparent-avatar-png-vector-avatar-icon-png-png.png"
             alt="Avatar img"
           />
-          <div className={styles.card__content_name} style={{ display: w < 100 ? 'none': 'block' }}>
+          <div
+            className={styles.card__content_name}
+            style={{ display: !over && width < 100 ? "none" : "block" }}
+          >
             <p>{service.ticket}</p>
             <p>{service.technician_name}</p>
           </div>
         </div>
         {/* BODY */}
-        <div className={`${styles.card__details}`} style={{ opacity: w < 100 ? 0 : 1 }}>
+        <div
+          className={`${styles.card__details}`}
+          style={{ opacity: width < 100 ? 0 : 1 }}
+        >
           <ul>
             <li>
               Tipo de Servicio: <span>{service.service_type}</span>

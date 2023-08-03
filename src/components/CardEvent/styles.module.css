@@ -14,17 +14,6 @@
     -o-transition: all .3s ease-in-out;
 }
 
-.card__container.card__small_size:hover {
-    width: 100% !important;
-    height: 120px !important;
-    transform: scale(1.1) !important;
-    z-index: 2 !important;
-    -webkit-transform: scale(1.1) !important;
-    -moz-transform: scale(1.1) !important;
-    -ms-transform: scale(1.1) !important;
-    -o-transform: scale(1.1) !important;
-}
-
 .card__container.card__small_size:hover .card__details {
     transition-delay: .3s;
     opacity: 1 !important;
