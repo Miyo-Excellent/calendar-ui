@@ -5,7 +5,7 @@ import { uppercaseFirstLetter } from "utils/string";
 
 import styles from "./styles.module.css";
 import { ServiceByTechnician } from "types/index";
-import { CardEvent } from "components/CardEvent";
+import { CardEvent } from "components/Calendar/Week/CardEvent";
 
 type WeekProps = {
   firstDateOfWeek: Date;

@@ -1,6 +1,6 @@
 import { Fragment, useMemo } from "react";
 import { ServiceByTechnician } from "types/index";
-import { formatDate, getHoursOfDay } from "utils/date";
+import { diffInHours, formatDate, getHoursOfDay } from "utils/date";
 import styles from "./styles.module.css";
 import { DayEvent } from "./DayEvent";
 
@@ -30,8 +30,9 @@ export const Day = ({ day = new Date(), data }: DayProps) => {
     const now = new Date();
     const nextHour = new Date(now);
     nextHour.setHours(now.getHours() + 1);
+   const diff = diffInHours(now, date)
     return (
-      now.getTime() >= date.getTime() && date.getTime() < nextHour.getTime()
+      now.getTime() >= date.getTime() && date.getTime() < nextHour.getTime() && diff === 0
     );
   };
 

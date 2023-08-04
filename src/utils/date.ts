@@ -1,3 +1,4 @@
+
 export const getHoursOfDay = (): string[] => {
   const now = new Date();
   now.setHours(0, 0, 0, 0);
@@ -56,4 +57,10 @@ export const formatDate = (d?: string | number | Date): string => {
   day = day.length < 2 ? `0${day}` : day
   month = month.length < 2 ? `0${month}` : month
   return [year, month, day].join('/')
+}
+
+export const diffInHours = (date1: Date, date2: Date): number => {
+  const hourNow = (date1.getTime() - date2.getTime()) / 1000
+  const diff = Math.abs(Math.floor(hourNow / (60 * 60)))
+  return diff
 }

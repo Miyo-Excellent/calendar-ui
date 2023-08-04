@@ -47,10 +47,13 @@ export const DayEvent = ({ service, height = 100 }: DayEventProps) => {
             width: `${service.percentage}%`,
             background: color,
             height: "4px",
-            borderRadius: 6
+            borderRadius: 6,
           }}
         />
         <ul>
+          <li>
+            Ticket: <span>{service.ticket}</span>
+          </li>
           <li>
             Tipo de Servicio: <span>{service.service_type}</span>
           </li>

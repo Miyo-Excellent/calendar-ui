@@ -11,6 +11,7 @@ export default defineConfig({
       utils: "/src/utils",  
       assets: "/src/assets",  
       types: "/src/types",  
+      hooks: "/src/hooks"
     }
   }
 })
