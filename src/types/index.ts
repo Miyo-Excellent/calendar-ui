@@ -1,6 +1,7 @@
 export interface ServiceByTechnician {
   id: number;
   technician_name: string;
+  technician_id: number,
   technician_charge: string;
   technician_picture: null;
   ticket: string;

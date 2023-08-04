@@ -1,0 +1,117 @@
+.day__container {
+    overflow-x: auto;
+}
+
+.day__container::-webkit-scrollbar {
+    height: 8px;
+}
+
+.day__container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.day__container::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+}
+
+.day__container::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.day__header, .day__content {
+    display: grid;
+    grid-template-columns: 2fr repeat(24, 1fr);
+}
+
+.hour, .day__technician_header {
+    padding: 10px;
+}
+
+.hour, .day__technician_header, .day__container_card, .day__technician_content {
+    min-width: 150px;
+    border: 1px solid #ccc;
+}
+
+.day__technician_header, .day__technician_content {
+    min-width: 250px;
+}
+
+.day__container_card, .day__technician_content {
+    height: 60px;
+}
+
+.day__technician_content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px 8px;
+}
+
+.day__technician_content img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+}
+
+.day__tech_name, .day__tech_charge {
+    color: #767676;
+    font-weight: 600;
+}
+
+.day__tech_name {
+    color: #0ED6B5;
+    font-size: 15px;
+}
+
+.day__tech_charge {
+    font-size: 13px;
+}
+
+.day__header_text {
+    color: #767676;
+    font-weight: bold;
+    font-size: 17px;
+}
+
+/* Day Event */
+.day__event_container {
+    position: relative;
+    z-index: 1;
+    border-radius: 6px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    -ms-border-radius: 6px;
+    -o-border-radius: 6px;
+}
+
+.day__event_progress {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    border-radius: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    -ms-border-radius: 6px;
+    -o-border-radius: 6px;
+}
+
+.day__event_progress_percentage {
+    font-weight: bold;
+    font-size: 13px;
+    pointer-events: none;
+    color: #1c1c1c;
+}

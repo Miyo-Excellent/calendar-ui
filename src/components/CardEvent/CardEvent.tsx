@@ -11,7 +11,10 @@ type CardEventProps = {
 export const CardEvent = ({ service, width = 100 }: CardEventProps) => {
   const [over, setOver] = useState<boolean>(false)
 
-  const height = (service.service_duration * 100) / 60;
+  const height = useMemo(() => {
+    return (service.service_duration * 100) / 60
+  }, [service]);
+  
   const color = useMemo(() => {
     return getRandomColor();
   }, []);
