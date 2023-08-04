@@ -26,6 +26,15 @@ export const Day = ({ day = new Date(), data }: DayProps) => {
     });
   };
 
+  const isHour = (date: Date) => {
+    const now = new Date();
+    const nextHour = new Date(now);
+    nextHour.setHours(now.getHours() + 1);
+    return (
+      now.getTime() >= date.getTime() && date.getTime() < nextHour.getTime()
+    );
+  };
+
   const technicians = useMemo(() => {
     const techs = data.map((service) => ({
       technician_name: service.technician_name,
@@ -52,8 +61,12 @@ export const Day = ({ day = new Date(), data }: DayProps) => {
           <span className={styles.day__header_text}>Technicians</span>
         </div>
         {hours.map((hour) => {
+          const todayHour = isHour(new Date(`${formatDate(day)} ${hour}`));
           return (
-            <div key={hour} className={styles.hour}>
+            <div
+              key={hour}
+              className={`${styles.hour} ${todayHour ? `${styles.today}` : ""}`}
+            >
               <span className={styles.day__header_text}>{hour}</span>
             </div>
           );
@@ -88,7 +101,11 @@ export const Day = ({ day = new Date(), data }: DayProps) => {
                 return (
                   <div key={hour} className={styles.day__container_card}>
                     {dataOfHour.map((service) => (
-                      <DayEvent key={service.id} service={service} height={100 / dataOfHour.length} />
+                      <DayEvent
+                        key={service.id}
+                        service={service}
+                        height={100 / dataOfHour.length}
+                      />
                     ))}
                   </div>
                 );
