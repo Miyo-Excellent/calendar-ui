@@ -1,30 +1,41 @@
 import { EN_DAYS } from "constants/days";
 import { Fragment, useMemo } from "react";
-import { formatDate, getDaysOfWeek, getHoursOfDay, isToday } from "utils/date";
+import { nanoid } from "nanoid";
+import { getDaysOfWeek, getHoursOfDay, isToday } from "utils/date";
 import { uppercaseFirstLetter } from "utils/string";
 
 import styles from "./styles.module.css";
-import { ServiceByTechnician } from "types/index";
 import { CardEvent } from "components/Calendar/Week/CardEvent";
+import { DataItemInterface } from "../../../interfaces/dataItem.interface";
+import moment from "moment";
 
 type WeekProps = {
   firstDateOfWeek: Date;
-  data: ServiceByTechnician[];
+  data: DataItemInterface[];
 };
 
 export const Week = ({ firstDateOfWeek, data }: WeekProps) => {
-  const getDataOfDay = (day: Date) => {
-    const nextHour = new Date(day);
-    nextHour.setHours(nextHour.getHours() + 1);
+  const getDataOfDay = (date: Date) => {
+    const currentDate = moment(new Date(date));
 
-    return data.filter((service) => {
-      const dateService = new Date(
-        `${service.service_date} ${service.service_time}`
-      );
-      return (
-        dateService.getTime() >= day.getTime() &&
-        dateService.getTime() < nextHour.getTime()
-      );
+    return data.filter((data) => {
+      const dateService = moment(new Date(data.service_date_start));
+      const hourFrom = dateService.hour();
+      const hourTo = currentDate.hour();
+      const dayFrom = dateService.day();
+      const dayTo = currentDate.day();
+      const monthFrom = dateService.month();
+      const monthTo = currentDate.month();
+      const yearFrom = dateService.year();
+      const yearTo = currentDate.year();
+
+      const isValid =
+        yearFrom == yearTo &&
+        monthFrom == monthTo &&
+        dayFrom === dayTo &&
+        hourFrom === hourTo;
+
+      return isValid;
     });
   };
 
@@ -65,12 +76,12 @@ export const Week = ({ firstDateOfWeek, data }: WeekProps) => {
             <div className={styles.hour}>
               <span className={styles.hour__text}>{hour}</span>
             </div>
-            {daysWeek.map((day) => {
-              const date = formatDate(day).concat(` ${hour}`);
-              const dataOfDay = getDataOfDay(new Date(date));
+            {daysWeek.map((date) => {
+              const dataOfDay = getDataOfDay(date);
+
               return (
                 <div
-                  key={`${day} ${hour}`}
+                  key={nanoid()}
                   className={styles.hour__day}
                   style={{
                     display: "grid",
@@ -82,7 +93,7 @@ export const Week = ({ firstDateOfWeek, data }: WeekProps) => {
                       <CardEvent
                         service={service}
                         key={service.id}
-                        width={100 / dataOfDay.length}                        
+                        width={100 / dataOfDay.length}
                       />
                     );
                   })}

@@ -1,11 +1,11 @@
 import { Fragment, useMemo } from "react";
-import { ServiceByTechnician } from "types/index";
 import { diffInHours, formatDate, getHoursOfDay } from "utils/date";
 import styles from "./styles.module.css";
 import { DayEvent } from "./DayEvent";
+import { DataItemInterface } from "../../../interfaces/dataItem.interface";
 
 type DayProps = {
-  data: ServiceByTechnician[];
+  data: DataItemInterface[];
   day?: Date;
 };
 
@@ -15,9 +15,8 @@ export const Day = ({ day = new Date(), data }: DayProps) => {
     nextHour.setHours(nextHour.getHours() + 1);
 
     return data.filter((service) => {
-      const dateService = new Date(
-        `${service.service_date} ${service.service_time}`
-      );
+      const dateService = new Date(service.service_date_start);
+
       return (
         dateService.getTime() >= day.getTime() &&
         dateService.getTime() < nextHour.getTime() &&
@@ -30,9 +29,11 @@ export const Day = ({ day = new Date(), data }: DayProps) => {
     const now = new Date();
     const nextHour = new Date(now);
     nextHour.setHours(now.getHours() + 1);
-   const diff = diffInHours(now, date)
+    const diff = diffInHours(now, date);
     return (
-      now.getTime() >= date.getTime() && date.getTime() < nextHour.getTime() && diff === 0
+      now.getTime() >= date.getTime() &&
+      date.getTime() < nextHour.getTime() &&
+      diff === 0
     );
   };
 
@@ -99,6 +100,7 @@ export const Day = ({ day = new Date(), data }: DayProps) => {
                   new Date(`${formatDate(day)} ${hour}`),
                   tech.technician_id
                 );
+
                 return (
                   <div key={hour} className={styles.day__container_card}>
                     {dataOfHour.map((service) => (

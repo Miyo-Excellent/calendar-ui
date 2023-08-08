@@ -1,43 +1,63 @@
 import { useMemo } from "react";
-import { ServiceByTechnician } from "types/index";
+import moment from "moment";
 import { addOpacityToHSL, getRandomColor } from "utils/string";
 
 import styles from "./styles.module.css";
+import { DayEventPropsInterface } from "../../../interfaces/dayEventProps.interface";
 
-type DayEventProps = {
-  service: ServiceByTechnician;
-  height?: number;
-};
+export const DayEvent = ({ service, height = 100 }: DayEventPropsInterface) => {
+  const startDate = useMemo(
+    () => moment(new Date(service.service_date_start)),
+    [service]
+  );
 
-export const DayEvent = ({ service, height = 100 }: DayEventProps) => {
+  const startDateMinutes = useMemo(() => startDate.minutes, [startDate]);
+
+  const endDate = useMemo(
+    () => moment(new Date(service.service_date_end)),
+    [service]
+  );
+
+  const duration = useMemo(() => {
+    return startDate.diff(endDate, "minutes");
+  }, [startDate, endDate]);
+
   const width = useMemo(() => {
-    return (service.service_duration * 100) / 60;
-  }, [service]);
+    const result = (duration * 100) / 60;
+
+    if (result < 0) return result * -1;
+
+    return result;
+  }, [duration]);
 
   const color = useMemo(() => {
     return getRandomColor();
   }, []);
 
+  const isLate = useMemo(() => endDate <= moment(), [endDate]);
+
   return (
     <div
       style={{
         width: `${width}%`,
-        background: `${addOpacityToHSL(color)}`,
+        background: isLate
+          ? "rgba(255, 63, 63, 1.0)"
+          : `${addOpacityToHSL(color)}`,
         minHeight: `${height}%`,
-        left: `${service.service_time.slice(3)}%`,
+        left: `${startDateMinutes}%`,
       }}
       className={styles.day__event_container}
     >
       <div
         className={styles.day__event_progress}
         style={{
-          width: `${service.percentage}%`,
-          background: color,
+          width: `${isLate ? 100 : service.percentage}%`,
+          background: isLate ? "rgba(0, 0, 0, 0.0)" : color,
           height: "100%",
         }}
       >
         <span className={styles.day__event_progress_percentage}>
-          {service.percentage}%
+          {isLate ? "Atrasado" : `${service.percentage}%`}
         </span>
       </div>
       <div className={styles.day__tooltip}>

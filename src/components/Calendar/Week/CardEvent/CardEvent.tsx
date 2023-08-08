@@ -1,35 +1,51 @@
-import { ServiceByTechnician } from "types/index";
+import moment from "moment";
 import styles from "./styles.module.css";
 import { addOpacityToHSL, getRandomColor } from "utils/string";
 import { useMemo, useState } from "react";
+import { DataItemInterface } from "../../../../interfaces/dataItem.interface";
 
 type CardEventProps = {
-  service: ServiceByTechnician;
+  service: DataItemInterface;
   width?: number;
 };
 
 export const CardEvent = ({ service, width = 100 }: CardEventProps) => {
-  const [over, setOver] = useState<boolean>(false)
+  const [over, setOver] = useState<boolean>(false);
+
+  const startDate = useMemo(
+    () => moment(new Date(service.service_date_start)),
+    [service]
+  );
+
+  const startDateMinutes = useMemo(() => startDate.minutes, [startDate]);
+
+  const endDate = useMemo(
+    () => moment(new Date(service.service_date_end)),
+    [service]
+  );
+
+  const duration = useMemo(() => {
+    return startDate.diff(endDate, "minutes");
+  }, [startDate, endDate]);
 
   const height = useMemo(() => {
-    return (service.service_duration * 100) / 60
-  }, [service]);
-  
+    return (duration * 100) / 60;
+  }, [duration]);
+
   const color = useMemo(() => {
     return getRandomColor();
   }, []);
 
   const styleOver = useMemo(() => {
-    let percentage = 0
-    if (width < 100)
-      percentage = 400
+    let percentage = 0;
+    if (width < 100) percentage = 400;
     return {
       minWidth: `${over ? percentage + width : width}%`,
       zIndex: over ? 2 : 1,
       transform: `scale(${over ? 1.1 : 1})`,
-      height: over ? '100%' : `${height}%`
-    }
-  }, [over, width, height])
+      height: over ? "100%" : `${height}%`,
+    };
+  }, [over, width, height]);
 
   return (
     <div
@@ -39,8 +55,8 @@ export const CardEvent = ({ service, width = 100 }: CardEventProps) => {
       style={{
         /* height: `${height}%`, */
         background: addOpacityToHSL(color),
-        top: `${service.service_time.slice(3)}%`,
-        ...styleOver
+        top: `${startDateMinutes}%`,
+        ...styleOver,
       }}
       onMouseOver={() => (width < 100 || height < 100 ? setOver(true) : null)}
       onMouseOut={() => setOver(false)}
